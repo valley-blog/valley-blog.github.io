@@ -1,3 +1,12 @@
+<!--
+ * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @Date: 2025-09-16 14:56:28
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2025-09-16 15:43:31
+ * @FilePath: /valley-blog.github.io/tags.md
+ * 
+ * Copyright (c) 2025 by error: git config user.email & please set dead value or install git, All Rights Reserved. 
+-->
 ---
 layout: default
 title: 标签
@@ -18,4 +27,4 @@ permalink: /tags/
       <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <span class="post-meta">· {{ post.date | date: "%Y-%m-%d" }}</span></li>
     {% endfor %}
   </ul>
-{% endfor %}
+{% endfor %} 
