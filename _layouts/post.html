@@ -184,7 +184,81 @@ layout: default
         }
       });
       
-      // 添加全局展开/收起功能（双击标题栏）
+      // URL自动识别和转换功能
+      function autoLinkUrls() {
+        const postContent = document.querySelector('.post-content');
+        if (!postContent) return;
+        
+        // 正则表达式匹配URL
+        const urlRegex = /(https?:\/\/[^\s\u4e00-\u9fa5]+)/g;
+        
+        // 递归处理文本节点
+        function processTextNode(node) {
+          if (node.nodeType === 3) { // 文本节点
+            const text = node.textContent;
+            const matches = [...text.matchAll(urlRegex)];
+            
+            if (matches.length > 0) {
+              const fragment = document.createDocumentFragment();
+              let lastIndex = 0;
+              
+              matches.forEach(match => {
+                const url = match[1];
+                const index = match.index;
+                
+                // 添加URL前的文本
+                if (index > lastIndex) {
+                  fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
+                }
+                
+                // 创建链接元素
+                const link = document.createElement('a');
+                link.href = url;
+                link.textContent = url;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                
+                fragment.appendChild(link);
+                lastIndex = index + url.length;
+              });
+              
+              // 添加剩余文本
+              if (lastIndex < text.length) {
+                fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+              }
+              
+              // 替换原节点
+              node.parentNode.replaceChild(fragment, node);
+              return true;
+            }
+          } else if (node.nodeType === 1) { // 元素节点
+            // 跳过已经存在的链接和代码块
+            if (node.tagName === 'A' || node.tagName === 'CODE' || node.tagName === 'PRE') {
+              return false;
+            }
+            
+            // 递归处理子节点
+            const children = Array.from(node.childNodes);
+            let modified = false;
+            children.forEach(child => {
+              if (processTextNode(child)) {
+                modified = true;
+              }
+            });
+            return modified;
+          }
+          return false;
+        }
+        
+        processTextNode(postContent);
+      }
+      
+      // 页面加载完成后执行URL自动识别
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', autoLinkUrls);
+      } else {
+        autoLinkUrls();
+      }
       const postContent = document.querySelector('.post-content');
       if (postContent) {
         let allHidden = false;

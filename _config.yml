@@ -8,6 +8,20 @@ author:
   name: valley team
   email: valley-team@bytedance.net
 
+# Markdown 处理器配置
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  enable_coderay: false
+  tables: true
+  auto_ids: true
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  hard_wrap: false
+  # 自动识别URL和邮箱链接
+  parse_block_html: true
+  parse_span_html: true
+
 # GitHub Pages 支持的插件
 plugins:
   - jekyll-feed
