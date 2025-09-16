@@ -1,3 +1,12 @@
+<!--
+ * @Author: ruipuluo ruipuluo@gmail.com
+ * @Date: 2025-09-16 15:42:41
+ * @LastEditors: ruipuluo ruipuluo@gmail.com
+ * @LastEditTime: 2025-09-16 16:03:35
+ * @FilePath: /valley-blog.github.io/_layouts/default.html
+ * 
+ * Copyright (c) 2025 by ruipuluo@gmail.com, All Rights Reserved. 
+-->
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: 'zh-CN' }}">
   <head>
@@ -5,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛰️</text></svg>">
     {% seo %}
     {% if site.google_analytics %}
       <!-- Google tag -->
@@ -22,6 +32,5 @@
     <main class="container">
       {{ content }}
     </main>
-    {% include footer.html %}
   </body>
 </html>

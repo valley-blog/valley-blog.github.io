@@ -1,5 +1,5 @@
-title: 分享 Blog
-description: 记录与分享
+title: Valley Share
+description: ""
 url: "" # 例如 https://<username>.github.io
 baseurl: "" # 例如 /repo-name （个人主页留空）
 lang: zh-CN
@@ -22,11 +22,11 @@ theme: null  # 使用自定义主题（本仓库的布局与样式）
 
 # 站点导航
 nav:
-  - title: 首页
+  - title: Home
     url: /
-  - title: 标签
+  - title: Tags
     url: /tags/
-  - title: 关于
+  - title: About us
     url: /about/
 
 # 社交/统计（可选）

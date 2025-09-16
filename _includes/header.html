@@ -1,3 +1,12 @@
+<!--
+ * @Author: ruipuluo ruipuluo@gmail.com
+ * @Date: 2025-09-16 15:42:41
+ * @LastEditors: ruipuluo ruipuluo@gmail.com
+ * @LastEditTime: 2025-09-16 16:04:49
+ * @FilePath: /valley-blog.github.io/_includes/header.html
+ * 
+ * Copyright (c) 2025 by ruipuluo@gmail.com, All Rights Reserved. 
+-->
 <header class="site-header">
   <div class="container flex">
     <a class="logo" href="{{ '/' | relative_url }}">{{ site.title }}</a>
@@ -5,7 +14,6 @@
       {% for item in site.nav %}
         <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
       {% endfor %}
-      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
     </nav>
   </div>
 </header>

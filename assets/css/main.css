@@ -1,10 +1,10 @@
 :root{
-  --bg:#0b0c10;
-  --card:#111217;
-  --fg:#e5e7eb;
-  --muted:#a3a3a3;
-  --accent:#60a5fa;
-  --border:#23242a;
+  --bg:#ffffff;
+  --card:#f8f9fa;
+  --fg:#1a1a1a;
+  --muted:#6c757d;
+  --accent:#0066cc;
+  --border:#dee2e6;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Noto Sans',Helvetica,Arial}
@@ -12,7 +12,7 @@ a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 .container{max-width:900px;margin:0 auto;padding:24px}
 .flex{display:flex;align-items:center;justify-content:space-between}
-.site-header{border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(11,12,16,.8);backdrop-filter:saturate(180%) blur(10px)}
+.site-header{border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:saturate(180%) blur(10px)}
 .logo{font-weight:700}
 .nav a{margin-left:16px;color:var(--fg)}
 .post-list{list-style:none;padding:0;margin:24px 0;display:grid;grid-template-columns:1fr;gap:16px}
@@ -25,6 +25,6 @@ a:hover{text-decoration:underline}
 .pagination .page{border:1px solid var(--border);padding:6px 12px;border-radius:10px;background:var(--card)}
 .post .post-title{margin:0 0 8px}
 .post .post-meta{color:var(--muted);margin-bottom:16px}
-.site-footer{border-top:1px solid var(--border);margin-top:24px;color:var(--muted)}
+
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 hr{border:none;border-top:1px solid var(--border);margin:24px 0}
