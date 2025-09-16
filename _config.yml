@@ -1,0 +1,33 @@
+title: 分享 Blog
+description: 记录与分享
+url: "" # 例如 https://<username>.github.io
+baseurl: "" # 例如 /repo-name （个人主页留空）
+lang: zh-CN
+
+author:
+  name: 你的名字
+  email: you@example.com
+
+# GitHub Pages 支持的插件
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-paginate
+
+paginate: 6
+paginate_path: "/page:num"
+
+theme: null  # 使用自定义主题（本仓库的布局与样式）
+
+# 站点导航
+nav:
+  - title: 首页
+    url: /
+  - title: 标签
+    url: /tags/
+  - title: 关于
+    url: /about/
+
+# 社交/统计（可选）
+google_analytics: ""  # UA-XXXX 或 G-XXXX；留空则不加载
