@@ -10,6 +10,213 @@ layout: default
   <div class="post-content">
     {{ content }}
   </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 改进的标题点击隐藏功能
+      const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+      
+      headings.forEach(heading => {
+        heading.style.cursor = 'pointer';
+        heading.title = '点击隐藏/显示内容';
+        
+        // 添加状态指示器
+        const indicator = document.createElement('span');
+        indicator.innerHTML = ' ▼';
+        indicator.style.fontSize = '0.7em';
+        indicator.style.color = 'var(--accent)';
+        heading.appendChild(indicator);
+        
+        heading.addEventListener('click', function() {
+          const indicator = this.querySelector('span');
+          let nextElement = this.nextElementSibling;
+          let hasContent = false;
+          
+          // 找到所有需要隐藏的内容直到下一个同级或更高级标题
+          const targetLevel = parseInt(this.tagName.charAt(1));
+          let elementsToToggle = [];
+          
+          while (nextElement) {
+            if (nextElement.matches('h1, h2, h3, h4, h5, h6')) {
+              const nextLevel = parseInt(nextElement.tagName.charAt(1));
+              if (nextLevel <= targetLevel) {
+                break; // 遇到同级或更高级标题时停止
+              }
+            }
+            elementsToToggle.push(nextElement);
+            nextElement = nextElement.nextElementSibling;
+          }
+          
+          // 如果有内容可隐藏
+          if (elementsToToggle.length > 0) {
+            const isHidden = elementsToToggle[0].style.display === 'none';
+            
+            elementsToToggle.forEach(element => {
+              element.style.display = isHidden ? '' : 'none';
+            });
+            
+            // 更新指示器
+            indicator.innerHTML = isHidden ? ' ▼' : ' ▶';
+            this.style.opacity = isHidden ? '1' : '0.7';
+            hasContent = true;
+          }
+          
+          // 如果没有内容可隐藏，给出视觉反馈
+          if (!hasContent) {
+            this.style.backgroundColor = 'rgba(0, 102, 204, 0.1)';
+            setTimeout(() => {
+              this.style.backgroundColor = '';
+            }, 200);
+          }
+        });
+      });
+      
+      // 重新设计的列表隐藏功能 - 标记显示在上一行
+      const lists = document.querySelectorAll('.post-content ul, .post-content ol');
+      
+      lists.forEach(list => {
+        // 只为顶级列表添加隐藏功能，避免嵌套列表重复
+        const isNested = list.closest('li') !== null;
+        const hasMarker = list.previousElementSibling && list.previousElementSibling.querySelector && list.previousElementSibling.querySelector('.list-toggle-prev');
+        
+        if (!isNested && !hasMarker) {
+          // 找到列表的前一个兄弟元素（通常是段落或标题）
+          let prevElement = list.previousElementSibling;
+          
+          // 如果前一个元素是文本节点或空白，继续向前找
+          while (prevElement && prevElement.nodeType === 3) {
+            prevElement = prevElement.previousElementSibling;
+          }
+          
+          // 如果找到合适的元素，将标记添加到其末尾
+          if (prevElement && (prevElement.tagName === 'P' || prevElement.tagName.match(/^H[1-6]$/))) {
+            // 创建切换标记
+            const toggleMarker = document.createElement('span');
+            toggleMarker.innerHTML = ' ▼';
+            toggleMarker.className = 'list-toggle-prev';
+            toggleMarker.style.cursor = 'pointer';
+            toggleMarker.style.color = 'var(--accent)';
+            toggleMarker.style.fontSize = '0.7em';
+            toggleMarker.style.marginLeft = '6px';
+            toggleMarker.style.verticalAlign = 'middle';
+            toggleMarker.style.opacity = '0';
+            toggleMarker.style.transition = 'opacity 0.2s ease';
+            toggleMarker.title = '点击隐藏/显示列表';
+            
+            // 将标记添加到前一个元素的末尾
+            prevElement.appendChild(toggleMarker);
+            
+            // 为前一个元素添加鼠标悬停事件
+            prevElement.addEventListener('mouseenter', function() {
+              toggleMarker.style.opacity = '1';
+            });
+            
+            prevElement.addEventListener('mouseleave', function() {
+              toggleMarker.style.opacity = '0';
+            });
+            
+            // 添加点击事件
+            toggleMarker.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const targetList = list;
+              if (targetList.style.display === 'none') {
+                targetList.style.display = '';
+                this.innerHTML = ' ▼';
+                this.style.opacity = '1';
+              } else {
+                targetList.style.display = 'none';
+                this.innerHTML = ' ▶';
+                this.style.opacity = '0.6';
+              }
+            });
+          } else {
+            // 如果没有找到前一个元素，创建一个新的段落来放置标记
+            const markerParagraph = document.createElement('p');
+            markerParagraph.style.margin = '8px 0';
+            markerParagraph.style.fontSize = '0.9em';
+            markerParagraph.style.color = 'var(--muted)';
+            
+            const toggleMarker = document.createElement('span');
+            toggleMarker.innerHTML = '列表 ▼';
+            toggleMarker.className = 'list-toggle-prev';
+            toggleMarker.style.cursor = 'pointer';
+            toggleMarker.style.color = 'var(--accent)';
+            toggleMarker.style.fontSize = '0.7em';
+            toggleMarker.style.marginRight = '6px';
+            toggleMarker.style.verticalAlign = 'middle';
+            toggleMarker.style.opacity = '0';
+            toggleMarker.style.transition = 'opacity 0.2s ease';
+            toggleMarker.title = '点击隐藏/显示列表';
+            
+            markerParagraph.appendChild(toggleMarker);
+            
+            // 插入到列表前面
+            list.parentNode.insertBefore(markerParagraph, list);
+            
+            // 为标记段落添加鼠标悬停事件
+            markerParagraph.addEventListener('mouseenter', function() {
+              toggleMarker.style.opacity = '1';
+            });
+            
+            markerParagraph.addEventListener('mouseleave', function() {
+              toggleMarker.style.opacity = '0';
+            });
+            
+            // 添加点击事件
+            toggleMarker.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const targetList = list;
+              if (targetList.style.display === 'none') {
+                targetList.style.display = '';
+                this.innerHTML = '列表 ▼';
+                this.style.opacity = '1';
+              } else {
+                targetList.style.display = 'none';
+                this.innerHTML = '列表 ▶';
+                this.style.opacity = '0.6';
+              }
+            });
+          }
+        }
+      });
+      
+      // 添加全局展开/收起功能（双击标题栏）
+      const postContent = document.querySelector('.post-content');
+      if (postContent) {
+        let allHidden = false;
+        
+        postContent.addEventListener('dblclick', function(e) {
+          if (e.target.tagName === 'H1' || e.target.tagName === 'H2' || e.target.tagName === 'H3' || 
+              e.target.tagName === 'H4' || e.target.tagName === 'H5' || e.target.tagName === 'H6') {
+            
+            const allElements = this.querySelectorAll('p, ul, ol, blockquote, pre, table, img');
+            
+            allElements.forEach(element => {
+              element.style.display = allHidden ? '' : 'none';
+            });
+            
+            // 更新所有指示器
+            const indicators = this.querySelectorAll('h1 span, h2 span, h3 span, h4 span, h5 span, h6 span');
+            indicators.forEach(indicator => {
+              indicator.innerHTML = allHidden ? ' ▼' : ' ▶';
+            });
+            
+            // 更新标题透明度
+            const headings = this.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            headings.forEach(heading => {
+              heading.style.opacity = allHidden ? '1' : '0.7';
+            });
+            
+            allHidden = !allHidden;
+          }
+        });
+      }
+    });
+  </script>
   {% if page.tags %}
   <div class="post-tags">
     <span>标签：</span>

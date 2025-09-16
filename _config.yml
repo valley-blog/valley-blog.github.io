@@ -5,8 +5,8 @@ baseurl: "" # 例如 /repo-name （个人主页留空）
 lang: zh-CN
 
 author:
-  name: 你的名字
-  email: you@example.com
+  name: valley team
+  email: valley-team@bytedance.net
 
 # GitHub Pages 支持的插件
 plugins:
